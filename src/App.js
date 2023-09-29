@@ -1,9 +1,15 @@
-import { useState } from 'react';
+import React,{ useState } from 'react';
 import './App.css';
 import About from './components/About';
 import Navbar from './components/Navbar';
 import TextForm from './components/TextForm';
 import Alert from './components/Alert';
+
+import {
+  Route,
+  Routes,
+  BrowserRouter
+} from "react-router-dom";
 
 function App() {
   const[mode,setMode] = useState('light'); //whether dark mode is enable or not
@@ -30,6 +36,16 @@ function App() {
         document.body.style.backgroundColor='#330c10';
         showAlert("Dark mode has been enabled","danger");
         showButton("danger");
+        document.title = 'TextUtils - Red mode';
+        // setInterval(() => {
+        //   document.title = 'TextUtils is amazing';
+          
+        // }, 2000);
+        // setInterval(() => {
+        //   document.title = 'Install TextUtils now';
+          
+        // }, 1500);
+
       }
       else
       {
@@ -37,6 +53,7 @@ function App() {
         document.body.style.backgroundColor='white';
         showAlert("Light mode has been enabled","danger");
         showButton("danger");
+        document.title = 'TextUtils - Light mode';
     }  
   }
 
@@ -47,6 +64,7 @@ function App() {
         document.body.style.backgroundColor='#0c3522';
         showAlert("Dark mode has been enabled","success");
         showButton("success");
+        document.title = 'TextUtils - Green mode';
       }
       else
       {
@@ -54,36 +72,46 @@ function App() {
         document.body.style.backgroundColor='white';
         showAlert("Light mode has been enabled","success");
         showButton("success");
-    }  
-  }
-
-  const toggleMode = () =>{
-
+        document.title = 'TextUtils - Light mode';
+      }  
+    }
+    
+    const toggleMode = () =>{
+      
     if(mode === 'light'){
-        setMode('dark');
-        document.body.style.backgroundColor='#042743';
-        showAlert("Dark mode has been enabled","primary");
-        showButton("primary");
-      }
-      else
-      {
-        setMode('light');
-        document.body.style.backgroundColor='white';
-        showAlert("Light mode has been enabled","primary");
-        showButton("primary");
-    }  
-  }
-  return (
-    <>
-    <Navbar title = "TextUtils" AboutText="About TextUtils" mode={mode} toggleTGMode={toggleTGMode} toggleTRMode={toggleTRMode} toggleMode={toggleMode}/>
-    {/* <Navbar /> */}
-    <Alert alert={alert}/>
-    <div className="container my-3">
+      setMode('dark');
+      document.body.style.backgroundColor='#042743';
+      showAlert("Dark mode has been enabled","primary");
+      showButton("primary");
+      document.title = 'TextUtils - Blue mode';
+    }
+    else
+    {
+      setMode('light');
+      document.body.style.backgroundColor='white';
+      showAlert("Light mode has been enabled","primary");
+      showButton("primary");
+      document.title = 'TextUtils - Light mode'
+      }  
+    }
+    return (
+      <>
+      <BrowserRouter>
 
-    <TextForm button={button} showAlert={showAlert} heading="Enter the text to analyze below" mode={mode} />
+      <Navbar title = "TextUtils" AboutText="About TextUtils" mode={mode} toggleTGMode={toggleTGMode} toggleTRMode={toggleTRMode} toggleMode={toggleMode}/>
+      {/* <Navbar /> */}
+      <Alert alert={alert}/>
+      <div className="container my-3">
+      <Routes>
+        <Route exact path="/" element={
+        <TextForm button={button} showAlert={showAlert} heading="Enter the text to analyze below" mode={mode} />
+        } />
+        <Route exact path="/about" element={<About />} />
+      </Routes>
 
-    {/* <About/> */}
-    </div>
+      {/* <About/>  */}
+      </div>
+      </BrowserRouter>
     </>
   );
 }
