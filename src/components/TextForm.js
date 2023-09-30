@@ -36,38 +36,38 @@ export default function TextForm(props) {
 
     //GLOBAL DECLARATION OF COUNTING NUMBER OF VOWELS AND CONSONANTS
 
-    let [count , setCount] = useState(0);
-    let [count1 , setCount1] = useState(0);
+    // let [count , setCount] = useState(0);
+    // let [count1 , setCount1] = useState(0);
 
-    let countChar = 0;
-    let countCons = 0;
+    // let countChar = 0;
+    // let countCons = 0;
 
     // Function to count Vowels:
 
-    const handleVoClick = () => {
-        for (count = 0; count <= text.length; count++) {
-        if (text.charAt(count).match(/[aeiouAEIOU]/)) {
-            countChar++;
-            setCount(countChar);
-        }
-        else if(countChar === 0){
-                setCount(0);
-        }
-        }
-        // console.log("No. of Vowels are: " + countChar);
-    };
+    // const handleVoClick = () => {
+    //     for (count = 0; count <= text.length; count++) {
+    //     if (text.charAt(count).match(/[aeiouAEIOU]/)) {
+    //         countChar++;
+    //         setCount(countChar);
+    //     }
+    //     else if(countChar === 0){
+    //             setCount(0);
+    //     }
+    //     }
+    //     // console.log("No. of Vowels are: " + countChar);
+    // };
 
-    // Function to count Consonants:
-    const handleCoClick = () => {
-        for (count1 = 0; count1 <= text.length; count1++) {
-        if (text.charAt(count1).match(/[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]/)) {
-            countCons++;
-            setCount1(countCons);
-        }
-        else if(countCons === 0)
-                setCount1(0);
-        }
-    }
+    // // Function to count Consonants:
+    // const handleCoClick = () => {
+    //     for (count1 = 0; count1 <= text.length; count1++) {
+    //     if (text.charAt(count1).match(/[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]/)) {
+    //         countCons++;
+    //         setCount1(countCons);
+    //     }
+    //     else if(countCons === 0)
+    //             setCount1(0);
+    //     }
+    // }
     const handleUpClick =()=>{
         // console.log("UpperCase was clicked.."+text);
         let newText = text.toUpperCase();
@@ -118,27 +118,27 @@ export default function TextForm(props) {
         <h1>{props.heading}</h1>
         <div class="mb-3">
             {/* one brace for javascripts and another for object */}
-            <textarea className="form-control" value={text} style={{backgroundColor : props.mode==='dark'?'grey':'white',color : props.mode==='dark'?'white':'black'}} onChange={handleOnChange} id="myBox" rows="8"></textarea>
+            <textarea className="form-control" value={text} style={{backgroundColor : props.mode==='dark'?'rgb(25, 55, 78)':'white',color : props.mode==='dark'?'white':'black'}} onChange={handleOnChange} id="myBox" rows="8"></textarea>
         </div>
-        <button className={`btn btn-${props.button.type} mx-1`} onClick={handleUpClick}>Convert to UpperCase</button>
-        <button className={`btn btn-${props.button.type} mx-1`} onClick={handleLoClick}>Convert to LowerCase</button>
-        <button className={`btn btn-${props.button.type} mx-1`} onClick={handleVoClick}>Count Vowels</button>
-        <button className={`btn btn-${props.button.type} mx-1`} onClick={handleCoClick}>Count Consonants</button>
-        <button className={`btn btn-${props.button.type} mx-1`} onClick={handleClearClick}>Clear Text</button>
-        <button className={`btn btn-${props.button.type} mx-1`} onClick={handleCopy}>Copy Text</button>
-        <button className={`btn btn-${props.button.type} mx-1`} onClick={handleExtraSpaces}>Remove Extra Spaces</button>
-        <button className={`btn btn-${props.button.type} mx-1`} onClick={handleToggleCaseClick}>Toggle Case</button>
-        <button type="submit" onClick={speak} className="btn btn-warning mx-2 my-2">Speak</button>
+        <button disabled={text.length===0} className='btn btn-primary mx-1 my-1' onClick={handleUpClick}>Convert to UpperCase</button>
+        <button disabled={text.length===0} className='btn btn-primary mx-1 my-1' onClick={handleLoClick}>Convert to LowerCase</button>
+        {/* <button disabled={text.length===0} className='btn btn-primary mx-1 my-1' onClick={handleVoClick}>Count Vowels</button> */}
+        {/* <button disabled={text.length===0} className='btn btn-primary mx-1 my-1' onClick={handleCoClick}>Count Consonants</button> */}
+        <button disabled={text.length===0} className='btn btn-primary mx-1 my-1' onClick={handleClearClick}>Clear Text</button>
+        <button disabled={text.length===0} className='btn btn-primary mx-1 my-1' onClick={handleCopy}>Copy Text</button>
+        <button disabled={text.length===0} className='btn btn-primary mx-1 my-1' onClick={handleExtraSpaces}>Remove Extra Spaces</button>
+        <button disabled={text.length===0} className='btn btn-primary mx-1 my-1' onClick={handleToggleCaseClick}>Toggle Case</button>
+        <button disabled={text.length===0} type="submit" onClick={speak} className="btn btn-warning mx-2 my-2">Speak</button>
 
     </div>
     <div className="container my-3" style={{color : props.mode==='dark'?'white':'#042743'}}>
         <h2>Your text summary</h2>
-        <p>{text.split(" ").length} words and {text.length} characters</p>
-        <p>{0.008 * text.split(" ").length} Minutes read</p>
-        <h3>You have entered:</h3>
-        <p> Vowels -{count} &  Consonants -{count1}</p>
+        <p>{text.split(/\s+/).filter((element)=>{return element.length !== 0}).length} words and {text.length} characters</p>
+        <p>{0.008 * text.split(" ").filter((element)=>{return element.length !== 0}).length} Minutes read</p>
+        {/* <h3>You have entered:</h3> */}
+        {/* <p> Vowels -{count} &  Consonants -{count1}</p> */}
         <h2>Preview</h2>
-        <p>{text.length>0?text:"Enter something in the text box to preview it here"}</p>
+        <p>{text.length>0?text:"Nothing to preview!"}</p>
 
     </div>
     </>
